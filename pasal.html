@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PASAL - Sasto Topup </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease 2.5s forwards;
+        }
+
+        .loading-screen h1 {
+            font-size: 5rem;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            animation: glowPulse 2s ease infinite, slideInScale 1s ease;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            animation: loadProgress 2.5s ease forwards;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255,255,255,0.5),
+                             0 0 40px rgba(255,255,255,0.3);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255,255,255,0.8),
+                             0 0 60px rgba(255,255,255,0.5);
+            }
+        }
+
+        @keyframes slideInScale {
+            0% {
+                transform: scale(0) translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.05;
+            animation: float 20s infinite ease-in-out;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            background-image: url('robux.png');
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            background-image: url('robux.png');
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 90px;
+            height: 90px;
+            background-image: url('robux.png');
+            bottom: 20%;
+            left: 60%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(-60px) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-30px) rotate(270deg);
+            }
+        }
+
+        .main-content {
+            opacity: 0;
+            animation: fadeIn 1s ease 3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 1.2rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.8rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            color: white;
+            padding: 200px 3rem 120px;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(102,126,234,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            animation: gridScroll 20s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: slideInFromLeft 1s ease;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            animation: slideInFromRight 1s ease 0.2s backwards;
+            font-weight: 300;
+            color: rgba(255,255,255,0.8);
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: bounceIn 1s ease 0.4s backwards;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.6);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .products {
+            max-width: 1400px;
+            margin: 100px auto;
+            padding: 0 3rem;
+        }
+
+        .products > h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 4rem;
+            font-weight: 800;
+            animation: fadeInUp 1s ease;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .products > h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .product-category {
+            margin-bottom: 6rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .category-title {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+            font-weight: 700;
+            position: relative;
+            animation: slideInFromLeft 0.8s ease;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2.5rem;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            animation: cardFloat 3s ease-in-out infinite;
+            animation-delay: calc(var(--card-index) * 0.1s);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .feature-card h3 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: priceGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes priceGlow {
+            0%, 100% {
+                filter: brightness(1);
+            }
+            50% {
+                filter: brightness(1.3);
+            }
+        }
+
+        .contact {
+            max-width: 1400px;
+            margin: 100px auto;
+            padding: 0 3rem;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            animation: fadeInUp 1s ease;
+        }
+
+        .contact-desc {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 4rem;
+            font-weight: 400;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .contact-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            display: block;
+            text-decoration: none;
+            padding: 4rem 3rem;
+            border-radius: 25px;
+            background: rgba(102, 126, 234, 0.15);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+            border-color: rgba(102, 126, 234, 0.6);
+            background: rgba(102, 126, 234, 0.25);
+        }
+
+        .contact-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .contact-icon img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .contact-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .contact-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 3rem;
+            margin-top: 100px;
+            border-top: 1px solid rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+            animation: footerLine 3s ease-in-out infinite;
+        }
+
+        @keyframes footerLine {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            nav {
+                padding: 0 1.5rem;
+            }
+
+            .products > h2,
+            .contact h2 {
+                font-size: 2.5rem;
+            }
+
+            .products,
+            .contact {
+                padding: 0 1.5rem;
+            }
+
+            .loading-screen h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <div class="loading-screen">
+        <h1>PASAL</h1>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header id="header">
+            <nav>
+                <div class="logo">
+                    PASAL
+                </div>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>Welcome to PASAL</h1>
+                <p>Most trusted and cheapest online topup in Nepal!</p>
+                <a href="#products" class="cta-button">Explore Products</a>
+            </div>
+        </section>
+
+        <section class="products" id="products">
+            <h2>Our Products</h2>
+            
+            <div class="product-category reveal">
+                <h3 class="category-title">🎮 Roblox</h3>
+                <div class="features">
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>100 Robux</h3>
+                        <p class="price">RS 120</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 1">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>200 Robux</h3>
+                        <p class="price">RS 240</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 2">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>300 Robux</h3>
+                        <p class="price">RS 360</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 3">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>400 Robux</h3>
+                        <p class="price">RS 480</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 4">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>500 Robux</h3>
+                        <p class="price">RS 600</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 5">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>600 Robux</h3>
+                        <p class="price">RS 720</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 6">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>700 Robux</h3>
+                        <p class="price">RS 840</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 7">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>800 Robux</h3>
+                        <p class="price">RS 960</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 8">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>900 Robux</h3>
+                        <p class="price">RS 1080</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 9">
+                        <img src="robux.png" alt="Robux" class="feature-icon">
+                        <h3>1000 Robux</h3>
+                        <p class="price">RS 1200</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-category reveal">
+                <h3 class="category-title">⚔️ Mobile Legends</h3>
+                <div class="features">
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>55 Diamonds</h3>
+                        <p class="price">RS 150</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 1">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>86 Diamonds</h3>
+                        <p class="price">RS 200</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 2">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>100 Diamonds</h3>
+                        <p class="price">RS 200</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 3">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>172 Diamonds</h3>
+                        <p class="price">RS 400</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 4">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>257 Diamonds</h3>
+                        <p class="price">RS 550</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 5">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>300 Diamonds</h3>
+                        <p class="price">RS 550</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 6">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>344 Diamonds</h3>
+                        <p class="price">RS 745</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 7">
+                        <img src="diamond.png" alt="Diamond" class="feature-icon">
+                        <h3>Weekly Diamond Pass</h3>
+                        <p class="price">RS 250</p>
+                    </div>
+                </div>
+            </div>
+            <div class="product-category reveal">
+                <h3 class="category-title">📱 App Subscriptions</h3>
+                <div class="features">
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="Netflix.png" alt="Neflix" class="feature-icon">
+                        <h3>Netflix</h3>
+                        <p class="price">RS 450</p>                        
+                    </div>
+                    <div class="feature-card" style="--card-index: 1">
+                        <img src="spotify.png" alt="Spotify" class="feature-icon">
+                        <h3>Spotify</h3>
+                        <p class="price">RS 250</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 2">
+                        <img src="yt.png" alt="YouTube Premium" class="feature-icon">
+                        <h3>YouTube Premium</h3>
+                        <p class="price">RS 200</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-category reveal">
+                <h3 class="category-title">🏰 Clash of Clans</h3>
+                <div class="features">
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="coc.png" alt ="Gold Pass" class ="feature-icon">
+                        <h3>Gold Pass</h3>
+                        <p class="price">RS 350</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="cr.png" alt="Gold Pass" class="feature-icon">
+                        <h3>Gold Pass</h3>
+                        <p class="price">RS 1600</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-category reveal">
+                <h3 class="category-title">🎯 Valorant</h3>
+                <div class="features">
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="valo.png" alt="Vp points" class="feature-icon">
+                        <h3>VP Points</h3>
+                        <p class="price">Not in stock</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-category reveal">
+                <h3 class="category-title">🎮 Steam</h3>
+                <div class="features">
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="steam.png" alt="gift card" class="feature-icon">
+                        <h3>$1.21 giftcard</h3>
+                        <p class="price">RS 250</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 1">
+                        <img src="steam.png" alt="gift card" class="feature-icon">
+                        <h3>$1.45 giftcard</h3>
+                        <p class="price">RS 300</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 2">
+                        <img src="steam.png" alt="gift card" class="feature-icon">
+                        <h3>$3.6 giftcard</h3>
+                        <p class="price">RS 650</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 3">
+                        <img src="steam.png" alt="gift card" class="feature-icon">
+                        <h3>$7.2 giftcard</h3>
+                        <p class="price">RS 1250</p>
+                    </div>
+                    <div class="feature-card" style="--card-index: 4">
+                        <img src="steam.png" alt="gift card" class="feature-icon">
+                        <h3>$10.71 giftcard</h3>
+                        <p class="price">RS 1850</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-category reveal">
+                <h3 class="category-title">⛏️ Minecraft</h3>
+                <div class="features">
+                    <div class="feature-card" style="--card-index: 0">
+                        <img src="mc.png" alt="Minecraft" class="feature-icon">
+                        <h3>Minecoins</h3>
+                        <p class="price">Not in stock</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <h2>Get in Touch</h2>
+            <p class="contact-desc">Choose your preferred way to contact us</p>
+            <div class="contact-options">
+                <a href="https://discord.gg/3Ff4rScFZk" target="_blank" class="contact-card">
+                    <img src="discord.png" alt="Robux" class="feature-icon">
+                    <h3>Discord</h3>
+                    <p>Message us on Discord</p>
+                </a>
+            
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>    <a href="https://www.instagram.com/pasal.topup" target="_blank" class="contact-card">
+                 <img src="insta.png" alt="Robux" class="feature-icon">
+                    <h3>Instagram</h3>
+                    <p>DM us on Instagram</p>
+                </a>
