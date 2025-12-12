@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PASAL - Sasto Topup </title>
+    <title>PASAL - Sasto Topup</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -207,6 +207,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: logoFloat 3s ease-in-out infinite;
+            cursor: pointer;
         }
 
         @keyframes logoFloat {
@@ -335,6 +336,8 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
             position: relative;
             overflow: hidden;
+            border: none;
+            cursor: pointer;
         }
 
         .cta-button::before {
@@ -445,6 +448,7 @@
             overflow: hidden;
             animation: cardFloat 3s ease-in-out infinite;
             animation-delay: calc(var(--card-index) * 0.1s);
+            cursor: pointer;
         }
 
         .feature-card::before {
@@ -650,6 +654,148 @@
             transform: translateY(0);
         }
 
+        /* Product Detail Page Styles */
+        .product-detail {
+            display: none;
+            max-width: 900px;
+            margin: 150px auto 100px;
+            padding: 0 3rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .product-detail.active {
+            display: block;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .detail-icon {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            object-fit: contain;
+            filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.6));
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        .detail-title {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .detail-price {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        .detail-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .delivery-info {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .buy-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px 60px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .buy-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.6);
+        }
+
+        .back-button {
+            background: transparent;
+            color: white;
+            padding: 18px 60px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .detail-contact-options {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .detail-contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(102, 126, 234, 0.15);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .detail-contact-btn:hover {
+            background: rgba(102, 126, 234, 0.25);
+            border-color: rgba(102, 126, 234, 0.6);
+            transform: translateY(-5px);
+        }
+
+        .detail-contact-btn img {
+            width: 30px;
+            height: 30px;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -681,6 +827,27 @@
             .loading-screen h1 {
                 font-size: 3rem;
             }
+
+            .detail-card {
+                padding: 2rem;
+            }
+
+            .detail-title {
+                font-size: 2rem;
+            }
+
+            .detail-price {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .buy-button,
+            .back-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -703,230 +870,273 @@
     <div class="main-content">
         <header id="header">
             <nav>
-                <div class="logo">
+                <div class="logo" onclick="showHomePage()">
                     PASAL
                 </div>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" onclick="showHomePage()">Home</a></li>
+                    <li><a href="#products" onclick="scrollToProducts()">Products</a></li>
+                    <li><a href="#contact" onclick="scrollToContact()">Contact</a></li>
                 </ul>
             </nav>
         </header>
 
-        <section class="hero" id="home">
-            <div class="hero-content">
-                <h1>Welcome to PASAL</h1>
-                <p>Most trusted and cheapest online topup in Nepal!</p>
-                <a href="#products" class="cta-button">Explore Products</a>
-            </div>
-        </section>
+        <!-- Home Page -->
+        <div id="homepage">
+            <section class="hero" id="home">
+                <div class="hero-content">
+                    <h1>Welcome to PASAL</h1>
+                    <p>Most trusted and cheapest online topup in Nepal!</p>
+                    <a href="#products" class="cta-button" onclick="scrollToProducts()">Explore Products</a>
+                </div>
+            </section>
 
-        <section class="products" id="products">
-            <h2>Our Products</h2>
-            
-            <div class="product-category reveal">
-                <h3 class="category-title">🎮 Roblox</h3>
-                <div class="features">
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>100 Robux</h3>
-                        <p class="price">RS 120</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 1">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>200 Robux</h3>
-                        <p class="price">RS 240</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 2">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>300 Robux</h3>
-                        <p class="price">RS 360</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 3">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>400 Robux</h3>
-                        <p class="price">RS 480</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 4">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>500 Robux</h3>
-                        <p class="price">RS 600</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 5">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>600 Robux</h3>
-                        <p class="price">RS 720</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 6">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>700 Robux</h3>
-                        <p class="price">RS 840</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 7">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>800 Robux</h3>
-                        <p class="price">RS 960</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 8">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>900 Robux</h3>
-                        <p class="price">RS 1080</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 9">
-                        <img src="robux.png" alt="Robux" class="feature-icon">
-                        <h3>1000 Robux</h3>
-                        <p class="price">RS 1200</p>
+            <section class="products" id="products">
+                <h2>Our Products</h2>
+                
+                <div class="product-category reveal">
+                    <h3 class="category-title">🎮 Roblox</h3>
+                    <div class="features">
+                        <div class="feature-card" style="--card-index: 0" onclick='showProductDetail("robux.png", "100 Robux", "RS 120", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>100 Robux</h3>
+                            <p class="price">RS 120</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 1" onclick='showProductDetail("robux.png", "200 Robux", "RS 240", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>200 Robux</h3>
+                            <p class="price">RS 240</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 2" onclick='showProductDetail("robux.png", "300 Robux", "RS 360", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>300 Robux</h3>
+                            <p class="price">RS 360</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 3" onclick='showProductDetail("robux.png", "400 Robux", "RS 480", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>400 Robux</h3>
+                            <p class="price">RS 480</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 4" onclick='showProductDetail("robux.png", "500 Robux", "RS 600", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>500 Robux</h3>
+                            <p class="price">RS 600</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 5" onclick='showProductDetail("robux.png", "600 Robux", "RS 720", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>600 Robux</h3>
+                            <p class="price">RS 720</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 6" onclick='showProductDetail("robux.png", "700 Robux", "RS 840", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>700 Robux</h3>
+                            <p class="price">RS 840</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 7" onclick='showProductDetail("robux.png", "800 Robux", "RS 960", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>800 Robux</h3>
+                            <p class="price">RS 960</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 8" onclick='showProductDetail("robux.png", "900 Robux", "RS 1080", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>900 Robux</h3>
+                            <p class="price">RS 1080</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 9" onclick='showProductDetail("robux.png", "1000 Robux", "RS 1200", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase", "Roblox")'>
+                            <img src="robux.png" alt="Robux" class="feature-icon">
+                            <h3>1000 Robux</h3>
+                            <p class="price">RS 1200</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-category reveal">
-                <h3 class="category-title">⚔️ Mobile Legends</h3>
-                <div class="features">
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>55 Diamonds</h3>
-                        <p class="price">RS 150</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 1">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>86 Diamonds</h3>
-                        <p class="price">RS 200</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 2">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>100 Diamonds</h3>
-                        <p class="price">RS 200</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 3">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>172 Diamonds</h3>
-                        <p class="price">RS 400</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 4">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>257 Diamonds</h3>
-                        <p class="price">RS 550</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 5">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>300 Diamonds</h3>
-                        <p class="price">RS 550</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 6">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>344 Diamonds</h3>
-                        <p class="price">RS 745</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 7">
-                        <img src="diamond.png" alt="Diamond" class="feature-icon">
-                        <h3>Weekly Diamond Pass</h3>
-                        <p class="price">RS 250</p>
+                <div class="product-category reveal">
+                    <h3 class="category-title">⚔️ Mobile Legends</h3>
+                    <div class="features">
+                        <div class="feature-card" style="--card-index: 0" onclick='showProductDetail("diamond.png", "55 Diamonds", "RS 150", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID for delivery.", "Delivery within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>55 Diamonds</h3>
+                            <p class="price">RS 150</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 1" onclick='showProductDetail("diamond.png", "86 Diamonds", "RS 200", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID for delivery.", "Delivery within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>86 Diamonds</h3>
+                            <p class="price">RS 200</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 2" onclick='showProductDetail("diamond.png", "100 Diamonds", "RS 200", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID for delivery.", "Delivery within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>100 Diamonds</h3>
+                            <p class="price">RS 200</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 3" onclick='showProductDetail("diamond.png", "172 Diamonds", "RS 400", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID for delivery.", "Delivery within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>172 Diamonds</h3>
+                            <p class="price">RS 400</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 4" onclick='showProductDetail("diamond.png", "257 Diamonds", "RS 550", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID for delivery.", "Delivery within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>257 Diamonds</h3>
+                            <p class="price">RS 550</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 5" onclick='showProductDetail("diamond.png", "300 Diamonds", "RS 550", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID for delivery.", "Delivery within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>300 Diamonds</h3>
+                            <p class="price">RS 550</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 6" onclick='showProductDetail("diamond.png", "344 Diamonds", "RS 745", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID for delivery.", "Delivery within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>344 Diamonds</h3>
+                            <p class="price">RS 745</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 7" onclick='showProductDetail("diamond.png", "Weekly Diamond Pass", "RS 250", "Weekly Diamond Pass will be activated on your Mobile Legends account. Provides daily diamond rewards for 7 days.", "Activated within 1-6 hours of purchase", "Mobile Legends")'>
+                            <img src="diamond.png" alt="Diamond" class="feature-icon">
+                            <h3>Weekly Diamond Pass</h3>
+                            <p class="price">RS 250</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="product-category reveal">
-                <h3 class="category-title">📱 App Subscriptions</h3>
-                <div class="features">
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="Netflix.png" alt="Neflix" class="feature-icon">
-                        <h3>Netflix</h3>
-                        <p class="price">RS 450</p>                        
-                    </div>
-                    <div class="feature-card" style="--card-index: 1">
-                        <img src="spotify.png" alt="Spotify" class="feature-icon">
-                        <h3>Spotify</h3>
-                        <p class="price">RS 250</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 2">
-                        <img src="yt.png" alt="YouTube Premium" class="feature-icon">
-                        <h3>YouTube Premium</h3>
-                        <p class="price">RS 200</p>
+
+                <div class="product-category reveal">
+                    <h3 class="category-title">📱 App Subscriptions</h3>
+                    <div class="features">
+                        <div class="feature-card" style="--card-index: 0" onclick='showProductDetail("Netflix.png", "Netflix Subscription", "RS 450", "Get 1 month Netflix subscription. Contact us with your preferred plan details.", "Account details provided within 24 hours", "Subscription")'>
+                            <img src="Netflix.png" alt="Netflix" class="feature-icon">
+                            <h3>Netflix</h3>
+                            <p class="price">RS 450</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 1" onclick='showProductDetail("spotify.png", "Spotify Premium", "RS 250", "Get 1 month Spotify Premium subscription. Enjoy ad-free music streaming.", "Account details provided within 24 hours", "Subscription")'>
+                            <img src="spotify.png" alt="Spotify" class="feature-icon">
+                            <h3>Spotify</h3>
+                            <p class="price">RS 250</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 2" onclick='showProductDetail("yt.png", "YouTube Premium", "RS 200", "Get 1 month YouTube Premium subscription. Watch ad-free videos and download content.", "Account details provided within 24 hours", "Subscription")'>
+                            <img src="yt.png" alt="YouTube Premium" class="feature-icon">
+                            <h3>YouTube Premium</h3>
+                            <p class="price">RS 200</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-category reveal">
-                <h3 class="category-title">🏰 Clash of Clans</h3>
-                <div class="features">
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="coc.png" alt ="Gold Pass" class ="feature-icon">
-                        <h3>Gold Pass</h3>
-                        <p class="price">RS 350</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="cr.png" alt="Gold Pass" class="feature-icon">
-                        <h3>Gold Pass</h3>
-                        <p class="price">RS 1600</p>
+                <div class="product-category reveal">
+                    <h3 class="category-title">🏰 Clash of Clans</h3>
+                    <div class="features">
+                        <div class="feature-card" style="--card-index: 0" onclick='showProductDetail("coc.png", "Clash of Clans Gold Pass", "RS 350", "Get Gold Pass for Clash of Clans. Provides exclusive rewards, perks, and hero skins for the season.", "Delivered within 24 hours of purchase", "Clash of Clans")'>
+                            <img src="coc.png" alt="Gold Pass" class="feature-icon">
+                            <h3>Gold Pass</h3>
+                            <p class="price">RS 350</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 1" onclick='showProductDetail("cr.png", "Clash Royale Gold Pass", "RS 1600", "Get Gold Pass for Clash Royale. Unlock exclusive rewards, emotes, and tower skins for the season.", "Delivered within 24 hours of purchase", "Clash Royale")'>
+                            <img src="cr.png" alt="Gold Pass" class="feature-icon">
+                            <h3>Clash Royale Pass</h3>
+                            <p class="price">RS 1600</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-category reveal">
-                <h3 class="category-title">🎯 Valorant</h3>
-                <div class="features">
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="valo.png" alt="Vp points" class="feature-icon">
-                        <h3>VP Points</h3>
-                        <p class="price">Not in stock</p>
+                <div class="product-category reveal">
+                    <h3 class="category-title">🎯 Valorant</h3>
+                    <div class="features">
+                        <div class="feature-card" style="--card-index: 0" onclick='showProductDetail("valo.png", "VP Points", "Not in stock", "Valorant Points are currently out of stock. Contact us for availability updates.", "Check back soon!", "Valorant")'>
+                            <img src="valo.png" alt="VP points" class="feature-icon">
+                            <h3>VP Points</h3>
+                            <p class="price">Not in stock</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-category reveal">
-                <h3 class="category-title">🎮 Steam</h3>
-                <div class="features">
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="steam.png" alt="gift card" class="feature-icon">
-                        <h3>$1.21 giftcard</h3>
-                        <p class="price">RS 250</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 1">
-                        <img src="steam.png" alt="gift card" class="feature-icon">
-                        <h3>$1.45 giftcard</h3>
-                        <p class="price">RS 300</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 2">
-                        <img src="steam.png" alt="gift card" class="feature-icon">
-                        <h3>$3.6 giftcard</h3>
-                        <p class="price">RS 650</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 3">
-                        <img src="steam.png" alt="gift card" class="feature-icon">
-                        <h3>$7.2 giftcard</h3>
-                        <p class="price">RS 1250</p>
-                    </div>
-                    <div class="feature-card" style="--card-index: 4">
-                        <img src="steam.png" alt="gift card" class="feature-icon">
-                        <h3>$10.71 giftcard</h3>
-                        <p class="price">RS 1850</p>
+                <div class="product-category reveal">
+                    <h3 class="category-title">🎮 Steam</h3>
+                    <div class="features">
+                        <div class="feature-card" style="--card-index: 0" onclick='showProductDetail("steam.png", "$1.21 Steam Gift Card", "RS 250", "Steam Gift Card will be delivered digitally. Add funds to your Steam wallet to purchase games and content.", "Digital code delivered within 24 hours", "Steam")'>
+                            <img src="steam.png" alt="gift card" class="feature-icon">
+                            <h3>$1.21 Gift Card</h3>
+                            <p class="price">RS 250</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 1" onclick='showProductDetail("steam.png", "$1.45 Steam Gift Card", "RS 300", "Steam Gift Card will be delivered digitally. Add funds to your Steam wallet to purchase games and content.", "Digital code delivered within 24 hours", "Steam")'>
+                            <img src="steam.png" alt="gift card" class="feature-icon">
+                            <h3>$1.45 Gift Card</h3>
+                            <p class="price">RS 300</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 2" onclick='showProductDetail("steam.png", "$3.6 Steam Gift Card", "RS 650", "Steam Gift Card will be delivered digitally. Add funds to your Steam wallet to purchase games and content.", "Digital code delivered within 24 hours", "Steam")'>
+                            <img src="steam.png" alt="gift card" class="feature-icon">
+                            <h3>$3.6 Gift Card</h3>
+                            <p class="price">RS 650</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 3" onclick='showProductDetail("steam.png", "$7.2 Steam Gift Card", "RS 1250", "Steam Gift Card will be delivered digitally. Add funds to your Steam wallet to purchase games and content.", "Digital code delivered within 24 hours", "Steam")'>
+                            <img src="steam.png" alt="gift card" class="feature-icon">
+                            <h3>$7.2 Gift Card</h3>
+                            <p class="price">RS 1250</p>
+                        </div>
+                        <div class="feature-card" style="--card-index: 4" onclick='showProductDetail("steam.png", "$10.71 Steam Gift Card", "RS 1850", "Steam Gift Card will be delivered digitally. Add funds to your Steam wallet to purchase games and content.", "Digital code delivered within 24 hours", "Steam")'>
+                            <img src="steam.png" alt="gift card" class="feature-icon">
+                            <h3>$10.71 Gift Card</h3>
+                            <p class="price">RS 1850</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-category reveal">
-                <h3 class="category-title">⛏️ Minecraft</h3>
-                <div class="features">
-                    <div class="feature-card" style="--card-index: 0">
-                        <img src="mc.png" alt="Minecraft" class="feature-icon">
-                        <h3>Minecoins</h3>
-                        <p class="price">Not in stock</p>
+                <div class="product-category reveal">
+                    <h3 class="category-title">⛏️ Minecraft</h3>
+                    <div class="features">
+                        <div class="feature-card" style="--card-index: 0" onclick='showProductDetail("mc.png", "Minecoins", "Not in stock", "Minecoins are currently out of stock. Contact us for availability updates.", "Check back soon!", "Minecraft")'>
+                            <img src="mc.png" alt="Minecraft" class="feature-icon">
+                            <h3>Minecoins</h3>
+                            <p class="price">Not in stock</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="contact" id="contact">
-            <h2>Get in Touch</h2>
-            <p class="contact-desc">Choose your preferred way to contact us</p>
-            <div class="contact-options">
-                <a href="https://discord.gg/3Ff4rScFZk" target="_blank" class="contact-card">
-                    <img src="discord.png" alt="Robux" class="feature-icon">
-                    <h3>Discord</h3>
-                    <p>Message us on Discord</p>
-                </a>
-            
+            <section class="contact" id="contact">
+                <h2>Get in Touch</h2>
+                <p class="contact-desc">Choose your preferred way to contact us</p>
+                <div class="contact-options">
+                    <a href="https://discord.gg/3Ff4rScFZk" target="_blank" class="contact-card">
+                        <img src="discord.png" alt="Discord" class="feature-icon">
+                        <h3>Discord</h3>
+                        <p>Message us on Discord</p>
+                    </a>
+                    <a href="https://www.instagram.com/pasal.topup" target="_blank" class="contact-card">
+                        <img src="insta.png" alt="Instagram" class="feature-icon">
+                        <h3>Instagram</h3>
+                        <p>DM us on Instagram</p>
+                    </a>
+                </div>
+            </section>
+
+            <footer>
+                <p>&copy; 2024 PASAL - Most trusted and cheapest online topup in Nepal</p>
+            </footer>
+        </div>
+
+        <!-- Product Detail Page -->
+        <div id="productDetail" class="product-detail">
+            <div class="detail-card">
+                <img id="detailIcon" src="" alt="Product" class="detail-icon">
+                <h2 class="detail-title" id="detailTitle"></h2>
+                <p class="detail-price" id="detailPrice"></p>
+                <div class="detail-description" id="detailDescription"></div>
+                <p class="delivery-info" id="deliveryInfo"></p>
+                
+                <div class="action-buttons">
+                    <button class="buy-button">Buy Now</button>
+                    <button class="back-button" onclick="showHomePage()">Back to Products</button>
+                </div>
+
+                <div class="detail-contact-options">
+                    <a href="https://discord.gg/3Ff4rScFZk" target="_blank" class="detail-contact-btn">
+                        <img src="discord.png" alt="Discord">
+                        <span>Contact on Discord</span>
+                    </a>
+                    <a href="https://www.instagram.com/pasal.topup" target="_blank" class="detail-contact-btn">
+                        <img src="insta.png" alt="Instagram">
+                        <span>Contact on Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Header scroll effect
         window.addEventListener('scroll', function() {
@@ -951,10 +1161,49 @@
                 }
             });
         });
+
+        // Function to show product detail page
+        function showProductDetail(icon, title, price, description, deliveryInfo, category) {
+            document.getElementById('homepage').style.display = 'none';
+            document.getElementById('productDetail').classList.add('active');
+            
+            document.getElementById('detailIcon').src = icon;
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailPrice').textContent = price;
+            document.getElementById('detailDescription').textContent = description;
+            document.getElementById('deliveryInfo').textContent = deliveryInfo;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Function to show home page
+        function showHomePage() {
+            document.getElementById('homepage').style.display = 'block';
+            document.getElementById('productDetail').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Function to scroll to products
+        function scrollToProducts() {
+            showHomePage();
+            setTimeout(() => {
+                const productsSection = document.getElementById('products');
+                if (productsSection) {
+                    productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+
+        // Function to scroll to contact
+        function scrollToContact() {
+            showHomePage();
+            setTimeout(() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
     </script>
 </body>
-</html>    <a href="https://www.instagram.com/pasal.topup" target="_blank" class="contact-card">
-                 <img src="insta.png" alt="Robux" class="feature-icon">
-                    <h3>Instagram</h3>
-                    <p>DM us on Instagram</p>
-                </a>
+</html>
