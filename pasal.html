@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PASAL - Sasto Topup</title>
+    
+    <!-- Open Graph Meta Tags for Link Sharing -->
+    <meta property="og:title" content="PASAL - Sasto Topup">
+    <meta property="og:description" content="Most trusted and cheapest online topup in Nepal! Get Robux, Mobile Legends Diamonds, Netflix, Spotify, and more.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PASAL - Sasto Topup">
+    <meta name="twitter:description" content="Most trusted and cheapest online topup in Nepal! Get Robux, Mobile Legends Diamonds, Netflix, Spotify, and more.">
+    <meta name="twitter:image" content="logo.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -1138,7 +1152,6 @@
     </div>
 
     <script>
-        // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
@@ -1148,7 +1161,6 @@
             }
         });
 
-        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1162,7 +1174,6 @@
             });
         });
 
-        // Function to show product detail page
         function showProductDetail(icon, title, price, description, deliveryInfo, category) {
             document.getElementById('homepage').style.display = 'none';
             document.getElementById('productDetail').classList.add('active');
@@ -1176,14 +1187,12 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Function to show home page
         function showHomePage() {
             document.getElementById('homepage').style.display = 'block';
             document.getElementById('productDetail').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Function to scroll to products
         function scrollToProducts() {
             showHomePage();
             setTimeout(() => {
@@ -1194,7 +1203,6 @@
             }, 100);
         }
 
-        // Function to scroll to contact
         function scrollToContact() {
             showHomePage();
             setTimeout(() => {
