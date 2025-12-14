@@ -4,656 +4,276 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PASAL - sasto n</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-            background: #ffffff;
-        }
-
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeOut 0.8s ease 2s forwards;
-        }
-
-        .loading-screen h1 {
-            font-size: 4rem;
-            color: white;
-            font-weight: 800;
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
-        .main-content {
-            opacity: 0;
-            animation: fadeIn 1s ease 2.5s forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        header {
-            background: #ffffff;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #e0e0e0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            cursor: pointer;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #667eea;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 150px 2rem 80px;
-            text-align: center;
-            margin-top: 60px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-            font-weight: 800;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #555;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s;
-            cursor: pointer;
-            border: none;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-        }
-
-        .products {
-            max-width: 1400px;
-            margin: 60px auto;
-            padding: 0 2rem;
-        }
-
-        .products > h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #1a1a1a;
-            margin-bottom: 3rem;
-            font-weight: 800;
-        }
-
-        .product-toggle {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-
-        .toggle-btn {
-            padding: 12px 40px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: 2px solid #667eea;
-            background: transparent;
-            color: #667eea;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .toggle-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .toggle-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .product-section {
-            animation: fadeInSection 0.5s ease;
-        }
-
-        @keyframes fadeInSection {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .product-category {
-            margin-bottom: 4rem;
-        }
-
-        .category-title {
-            font-size: 2rem;
-            color: #667eea;
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 15px;
-            transition: all 0.3s;
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            object-fit: contain;
-        }
-
-        .feature-card h3 {
-            color: #1a1a1a;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .price {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .contact {
-            max-width: 1400px;
-            margin: 60px auto;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .contact h2 {
-            font-size: 2.5rem;
-            color: #1a1a1a;
-            margin-bottom: 1rem;
-            font-weight: 800;
-        }
-
-        .contact-desc {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 2rem;
-        }
-
-        .contact-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-card {
-            display: block;
-            text-decoration: none;
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            background: #f5f7fa;
-            border: 2px solid #e0e0e0;
-            color: #1a1a1a;
-            transition: all 0.3s;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
-        }
-
-        .contact-card img {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1rem;
-            display: block;
-        }
-
-        .contact-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        footer {
-            background: #f5f7fa;
-            color: #555;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 60px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .product-detail {
-            display: none;
-            max-width: 800px;
-            margin: 120px auto 60px;
-            padding: 0 2rem;
-        }
-
-        .product-detail.active {
-            display: block;
-        }
-
-        .detail-card {
-            background: #ffffff;
-            border: 2px solid #e0e0e0;
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
-
-        .detail-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1.5rem;
-            object-fit: contain;
-        }
-
-        .detail-title {
-            font-size: 2.5rem;
-            color: #1a1a1a;
-            margin-bottom: 1rem;
-            font-weight: 800;
-        }
-
-        .detail-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
-        }
-
-        .detail-description {
-            color: #555;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: #f5f7fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .delivery-info {
-            color: #777;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .buy-button {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 50px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .buy-button:hover {
-            transform: translateY(-3px);
-        }
-
-        .back-button {
-            background: transparent;
-            color: #667eea;
-            padding: 15px 50px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: 2px solid #667eea;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .back-button:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .detail-contact-options {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .detail-contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            background: #f5f7fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            color: #1a1a1a;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .detail-contact-btn:hover {
-            border-color: #667eea;
-            transform: translateY(-3px);
-        }
-
-        .detail-contact-btn img {
-            width: 25px;
-            height: 25px;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Inter, sans-serif; line-height: 1.6; color: #1a1a1a; }
+        
+        .loading { position: fixed; inset: 0; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; z-index: 9999; animation: fadeOut 0.8s 2s forwards; }
+        .loading h1 { font-size: 4rem; color: white; font-weight: 800; }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        
+        .main { opacity: 0; animation: fadeIn 1s 2.5s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        
+        header { background: #fff; padding: 1rem 0; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid #e0e0e0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        .logo { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a { color: #333; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: #667eea; }
+        
+        .hero { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); padding: 150px 2rem 80px; text-align: center; margin-top: 60px; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; font-weight: 800; }
+        .hero p { font-size: 1.3rem; margin-bottom: 2rem; color: #555; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: transform 0.3s; cursor: pointer; border: none; }
+        .btn:hover { transform: translateY(-3px); }
+        
+        .products { max-width: 1400px; margin: 60px auto; padding: 0 2rem; }
+        .products h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; font-weight: 800; }
+        .toggle { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+        .toggle button { padding: 12px 40px; font-size: 1.1rem; font-weight: 600; border: 2px solid #667eea; background: transparent; color: #667eea; border-radius: 50px; cursor: pointer; transition: all 0.3s; }
+        .toggle button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(102,126,234,0.3); }
+        .toggle button.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        
+        .category { margin-bottom: 4rem; }
+        .category h3 { font-size: 2rem; color: #667eea; margin-bottom: 2rem; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .card { text-align: center; padding: 2rem; border-radius: 15px; background: #fff; border: 1px solid #e0e0e0; cursor: pointer; transition: all 0.3s; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(102,126,234,0.2); border-color: #667eea; }
+        .card img { width: 80px; height: 80px; margin: 0 auto 1rem; object-fit: contain; }
+        .card h4 { margin-bottom: 1rem; font-size: 1.3rem; font-weight: 600; }
+        .price { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .contact { max-width: 1400px; margin: 60px auto; padding: 0 2rem; text-align: center; }
+        .contact h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800; }
+        .contact p { font-size: 1.1rem; color: #555; margin-bottom: 2rem; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 700px; margin: 0 auto; }
+        .contact-card { text-decoration: none; padding: 3rem 2rem; border-radius: 20px; background: #f5f7fa; border: 2px solid #e0e0e0; color: #1a1a1a; transition: all 0.3s; display: block; }
+        .contact-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(102,126,234,0.2); border-color: #667eea; }
+        .contact-card img { width: 60px; height: 60px; margin: 0 auto 1rem; display: block; }
+        .contact-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700; }
+        
+        footer { background: #f5f7fa; color: #555; text-align: center; padding: 2rem; margin-top: 60px; border-top: 1px solid #e0e0e0; }
+        
+        .detail { display: none; max-width: 800px; margin: 120px auto 60px; padding: 0 2rem; }
+        .detail.active { display: block; }
+        .detail-card { background: #fff; border: 2px solid #e0e0e0; border-radius: 20px; padding: 3rem; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .detail img { width: 120px; height: 120px; margin: 0 auto 1.5rem; }
+        .detail h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800; }
+        .detail-price { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem; }
+        .detail-desc { color: #555; font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem; padding: 1.5rem; background: #f5f7fa; border-radius: 10px; border-left: 4px solid #667eea; }
+        .delivery { color: #777; font-size: 0.9rem; margin-bottom: 2rem; font-style: italic; }
+        .actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        .btn-outline { background: transparent; color: #667eea; padding: 15px 50px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; border: 2px solid #667eea; cursor: pointer; transition: all 0.3s; }
+        .btn-outline:hover { background: #667eea; color: white; }
+        .detail-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .detail-links a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: #f5f7fa; border: 2px solid #e0e0e0; border-radius: 10px; color: #1a1a1a; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .detail-links a:hover { border-color: #667eea; transform: translateY(-3px); }
+        .detail-links img { width: 25px; height: 25px; }
+        
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.1rem; }
             nav ul { gap: 1rem; font-size: 0.9rem; }
-            nav { padding: 0 1rem; }
-            .products > h2, .contact h2 { font-size: 2rem; }
-            .detail-title { font-size: 2rem; }
-            .action-buttons { flex-direction: column; }
-            .buy-button, .back-button { width: 100%; }
-            .product-toggle { flex-direction: column; }
-            .toggle-btn { width: 100%; }
+            .products h2, .contact h2 { font-size: 2rem; }
+            .detail h2 { font-size: 2rem; }
+            .actions, .toggle { flex-direction: column; }
+            .btn, .btn-outline, .toggle button { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="loading-screen">
-        <h1>PASAL</h1>
-    </div>
+    <div class="loading"><h1>PASAL</h1></div>
 
-    <div class="main-content">
+    <div class="main">
         <header>
             <nav>
-                <div class="logo" onclick="showHomePage()">PASAL</div>
+                <div class="logo" onclick="home()">PASAL</div>
                 <ul>
-                    <li><a href="#" onclick="showHomePage()">Home</a></li>
-                    <li><a href="#products" onclick="scrollToProducts()">Products</a></li>
-                    <li><a href="#contact" onclick="scrollToContact()">Contact</a></li>
+                    <li><a href="#" onclick="home()">Home</a></li>
+                    <li><a href="#products" onclick="scroll('products')">Products</a></li>
+                    <li><a href="#contact" onclick="scroll('contact')">Contact</a></li>
                 </ul>
             </nav>
         </header>
 
-        <div id="homepage">
+        <div id="home">
             <section class="hero">
                 <h1>Welcome to PASAL</h1>
                 <p>Most trusted and cheapest online topup in Nepal!</p>
-                <a href="#products" class="cta-button" onclick="scrollToProducts()">Explore Products</a>
+                <a href="#products" class="btn" onclick="scroll('products')">Explore Products</a>
             </section>
 
             <section class="products" id="products">
                 <h2>Our Products</h2>
                 
-                <div class="product-toggle">
-                    <button class="toggle-btn" onclick="showStoreProducts()">Store</button>
-                    <button class="toggle-btn active" onclick="showOnlineProducts()">Online</button>
+                <div class="toggle">
+                    <button onclick="showStore()">Store</button>
+                    <button class="active" onclick="showOnline()">Online</button>
                 </div>
 
-                <div id="onlineProducts" class="product-section">
-                    <div class="product-category">
-                        <h3 class="category-title">🎮 Roblox</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("robux.png", "100 Robux", "RS 120", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase")'>
-                                <img src="robux.png" alt="Robux" class="feature-icon">
-                                <h3>100 Robux</h3>
+                <div id="online">
+                    <div class="category">
+                        <h3>🎮 Roblox</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("robux.png", "100 Robux", "RS 120", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase")'>
+                                <img src="robux.png" alt="Robux">
+                                <h4>100 Robux</h4>
                                 <p class="price">RS 120</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("robux.png", "500 Robux", "RS 600", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
-                                <img src="robux.png" alt="Robux" class="feature-icon">
-                                <h3>500 Robux</h3>
+                            <div class="card" onclick='detail("robux.png", "500 Robux", "RS 600", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
+                                <img src="robux.png" alt="Robux">
+                                <h4>500 Robux</h4>
                                 <p class="price">RS 600</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("robux.png", "1000 Robux", "RS 1200", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
-                                <img src="robux.png" alt="Robux" class="feature-icon">
-                                <h3>1000 Robux</h3>
+                            <div class="card" onclick='detail("robux.png", "1000 Robux", "RS 1200", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
+                                <img src="robux.png" alt="Robux">
+                                <h4>1000 Robux</h4>
                                 <p class="price">RS 1200</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="product-category">
-                        <h3 class="category-title">⚔️ Mobile Legends</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("diamond.png", "55 Diamonds", "RS 150", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID.", "Delivery within 1-6 hours")'>
-                                <img src="diamond.png" alt="Diamond" class="feature-icon">
-                                <h3>55 Diamonds</h3>
+                    <div class="category">
+                        <h3>⚔️ Mobile Legends</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("diamond.png", "55 Diamonds", "RS 150", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID.", "Delivery within 1-6 hours")'>
+                                <img src="diamond.png" alt="Diamond">
+                                <h4>55 Diamonds</h4>
                                 <p class="price">RS 150</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("diamond.png", "172 Diamonds", "RS 400", "Diamonds will be added directly to your account.", "Delivery within 1-6 hours")'>
-                                <img src="diamond.png" alt="Diamond" class="feature-icon">
-                                <h3>172 Diamonds</h3>
+                            <div class="card" onclick='detail("diamond.png", "172 Diamonds", "RS 400", "Diamonds will be added directly to your account.", "Delivery within 1-6 hours")'>
+                                <img src="diamond.png" alt="Diamond">
+                                <h4>172 Diamonds</h4>
                                 <p class="price">RS 400</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("diamond.png", "Weekly Diamond Pass", "RS 250", "Weekly Pass provides daily diamond rewards for 7 days.", "Activated within 1-6 hours")'>
-                                <img src="diamond.png" alt="Diamond" class="feature-icon">
-                                <h3>Weekly Pass</h3>
+                            <div class="card" onclick='detail("diamond.png", "Weekly Diamond Pass", "RS 250", "Weekly Pass provides daily diamond rewards for 7 days.", "Activated within 1-6 hours")'>
+                                <img src="diamond.png" alt="Diamond">
+                                <h4>Weekly Pass</h4>
                                 <p class="price">RS 250</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="product-category">
-                        <h3 class="category-title">📱 App Subscriptions</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("Netflix.png", "Netflix Subscription", "RS 450", "Get 1 month Netflix subscription.", "Details within 24 hours")'>
-                                <img src="Netflix.png" alt="Netflix" class="feature-icon">
-                                <h3>Netflix</h3>
+                    <div class="category">
+                        <h3>📱 App Subscriptions</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("Netflix.png", "Netflix Subscription", "RS 450", "Get 1 month Netflix subscription.", "Details within 24 hours")'>
+                                <img src="Netflix.png" alt="Netflix">
+                                <h4>Netflix</h4>
                                 <p class="price">RS 450</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("spotify.png", "Spotify Premium", "RS 250", "Get 1 month Spotify Premium.", "Details within 24 hours")'>
-                                <img src="spotify.png" alt="Spotify" class="feature-icon">
-                                <h3>Spotify</h3>
+                            <div class="card" onclick='detail("spotify.png", "Spotify Premium", "RS 250", "Get 1 month Spotify Premium.", "Details within 24 hours")'>
+                                <img src="spotify.png" alt="Spotify">
+                                <h4>Spotify</h4>
                                 <p class="price">RS 250</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("yt.png", "YouTube Premium", "RS 200", "Get 1 month YouTube Premium.", "Details within 24 hours")'>
-                                <img src="yt.png" alt="YouTube" class="feature-icon">
-                                <h3>YouTube Premium</h3>
+                            <div class="card" onclick='detail("yt.png", "YouTube Premium", "RS 200", "Get 1 month YouTube Premium.", "Details within 24 hours")'>
+                                <img src="yt.png" alt="YouTube">
+                                <h4>YouTube Premium</h4>
                                 <p class="price">RS 200</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="product-category">
-                        <h3 class="category-title">🎮 Steam</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("steam.png", "$1.21 Steam Gift Card", "RS 250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
-                                <img src="steam.png" alt="Steam" class="feature-icon">
-                                <h3>$1.21 Gift Card</h3>
+                    <div class="category">
+                        <h3>🎮 Steam</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("steam.png", "$1.21 Steam Gift Card", "RS 250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
+                                <img src="steam.png" alt="Steam">
+                                <h4>$1.21 Gift Card</h4>
                                 <p class="price">RS 250</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("steam.png", "$7.2 Steam Gift Card", "RS 1250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
-                                <img src="steam.png" alt="Steam" class="feature-icon">
-                                <h3>$7.2 Gift Card</h3>
+                            <div class="card" onclick='detail("steam.png", "$7.2 Steam Gift Card", "RS 1250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
+                                <img src="steam.png" alt="Steam">
+                                <h4>$7.2 Gift Card</h4>
                                 <p class="price">RS 1250</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="storeProducts" class="product-section" style="display: none;">
-                    <div class="product-category">
-                        <h3 class="category-title">👕 Clothes</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Shirt", "T-Shirt", "RS 500", "High-quality cotton t-shirts in various colors and sizes.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Shirt" alt="T-Shirt" class="feature-icon">
-                                <h3>T-Shirt</h3>
+                <div id="store" style="display:none">
+                    <div class="category">
+                        <h3>👕 Clothes</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Shirt", "T-Shirt", "RS 500", "High-quality cotton t-shirts in various colors and sizes.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Shirt" alt="T-Shirt">
+                                <h4>T-Shirt</h4>
                                 <p class="price">RS 500</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Jeans", "Jeans", "RS 1500", "Comfortable denim jeans for everyday wear.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Jeans" alt="Jeans" class="feature-icon">
-                                <h3>Jeans</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/764ba2/ffffff?text=Jeans", "Jeans", "RS 1500", "Comfortable denim jeans for everyday wear.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Jeans" alt="Jeans">
+                                <h4>Jeans</h4>
                                 <p class="price">RS 1500</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Jacket", "Jacket", "RS 2500", "Stylish jackets for all seasons.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Jacket" alt="Jacket" class="feature-icon">
-                                <h3>Jacket</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Jacket", "Jacket", "RS 2500", "Stylish jackets for all seasons.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Jacket" alt="Jacket">
+                                <h4>Jacket</h4>
                                 <p class="price">RS 2500</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="product-category">
-                        <h3 class="category-title">🎨 Decoration</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Frame", "Photo Frame", "RS 300", "Beautiful frames to display your memories.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Frame" alt="Frame" class="feature-icon">
-                                <h3>Photo Frame</h3>
+                    <div class="category">
+                        <h3>🎨 Decoration</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Frame", "Photo Frame", "RS 300", "Beautiful frames to display your memories.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Frame" alt="Frame">
+                                <h4>Photo Frame</h4>
                                 <p class="price">RS 300</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Lamp", "Desk Lamp", "RS 800", "Modern desk lamps for your workspace.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Lamp" alt="Lamp" class="feature-icon">
-                                <h3>Desk Lamp</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/764ba2/ffffff?text=Lamp", "Desk Lamp", "RS 800", "Modern desk lamps for your workspace.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Lamp" alt="Lamp">
+                                <h4>Desk Lamp</h4>
                                 <p class="price">RS 800</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Vase", "Decorative Vase", "RS 600", "Elegant vases for your home decor.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Vase" alt="Vase" class="feature-icon">
-                                <h3>Decorative Vase</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Vase", "Decorative Vase", "RS 600", "Elegant vases for your home decor.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Vase" alt="Vase">
+                                <h4>Decorative Vase</h4>
                                 <p class="price">RS 600</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="product-category">
-                        <h3 class="category-title">⌚ Watches</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Watch", "Smart Watch", "RS 3500", "Feature-rich smartwatch with fitness tracking.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Watch" alt="Smart Watch" class="feature-icon">
-                                <h3>Smart Watch</h3>
+                    <div class="category">
+                        <h3>⌚ Watches</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Watch", "Smart Watch", "RS 3500", "Feature-rich smartwatch with fitness tracking.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Watch" alt="Smart Watch">
+                                <h4>Smart Watch</h4>
                                 <p class="price">RS 3500</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Watch", "Analog Watch", "RS 2000", "Classic analog watches with elegant design.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Watch" alt="Analog Watch" class="feature-icon">
-                                <h3>Analog Watch</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/764ba2/ffffff?text=Watch", "Analog Watch", "RS 2000", "Classic analog watches with elegant design.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Watch" alt="Analog Watch">
+                                <h4>Analog Watch</h4>
                                 <p class="price">RS 2000</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Watch", "Sports Watch", "RS 1800", "Durable sports watches for active lifestyle.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Watch" alt="Sports Watch" class="feature-icon">
-                                <h3>Sports Watch</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Watch", "Sports Watch", "RS 1800", "Durable sports watches for active lifestyle.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Watch" alt="Sports Watch">
+                                <h4>Sports Watch</h4>
                                 <p class="price">RS 1800</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="product-category">
-                        <h3 class="category-title">🧸 Toys</h3>
-                        <div class="features">
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Teddy", "Teddy Bear", "RS 700", "Soft and cuddly teddy bears for kids.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Teddy" alt="Teddy" class="feature-icon">
-                                <h3>Teddy Bear</h3>
+                    <div class="category">
+                        <h3>🧸 Toys</h3>
+                        <div class="grid">
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Teddy", "Teddy Bear", "RS 700", "Soft and cuddly teddy bears for kids.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Teddy" alt="Teddy">
+                                <h4>Teddy Bear</h4>
                                 <p class="price">RS 700</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Puzzle", "Puzzle Set", "RS 500", "Educational puzzle sets for all ages.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Puzzle" alt="Puzzle" class="feature-icon">
-                                <h3>Puzzle Set</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/764ba2/ffffff?text=Puzzle", "Puzzle Set", "RS 500", "Educational puzzle sets for all ages.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Puzzle" alt="Puzzle">
+                                <h4>Puzzle Set</h4>
                                 <p class="price">RS 500</p>
                             </div>
-                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Car", "Remote Control Car", "RS 1200", "Fun remote control cars for kids.", "Available in store")'>
-                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Car" alt="RC Car" class="feature-icon">
-                                <h3>RC Car</h3>
+                            <div class="card" onclick='detail("https://via.placeholder.com/80/667eea/ffffff?text=Car", "Remote Control Car", "RS 1200", "Fun remote control cars for kids.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Car" alt="RC Car">
+                                <h4>RC Car</h4>
                                 <p class="price">RS 1200</p>
                             </div>
                         </div>
@@ -663,8 +283,8 @@
 
             <section class="contact" id="contact">
                 <h2>Get in Touch</h2>
-                <p class="contact-desc">Choose your preferred way to contact us</p>
-                <div class="contact-options">
+                <p>Choose your preferred way to contact us</p>
+                <div class="contact-grid">
                     <a href="https://discord.gg/3Ff4rScFZk" target="_blank" class="contact-card">
                         <img src="discord.png" alt="Discord">
                         <h3>Discord</h3>
@@ -683,25 +303,25 @@
             </footer>
         </div>
 
-        <div id="productDetail" class="product-detail">
+        <div id="details" class="detail">
             <div class="detail-card">
-                <img id="detailIcon" src="" alt="Product" class="detail-icon">
-                <h2 class="detail-title" id="detailTitle"></h2>
-                <p class="detail-price" id="detailPrice"></p>
-                <div class="detail-description" id="detailDescription"></div>
-                <p class="delivery-info" id="deliveryInfo"></p>
+                <img id="di" src="" alt="Product">
+                <h2 id="dt"></h2>
+                <p class="detail-price" id="dp"></p>
+                <div class="detail-desc" id="dd"></div>
+                <p class="delivery" id="dv"></p>
                 
-                <div class="action-buttons">
-                    <button class="buy-button">Buy Now</button>
-                    <button class="back-button" onclick="showHomePage()">Back to Products</button>
+                <div class="actions">
+                    <button class="btn">Buy Now</button>
+                    <button class="btn-outline" onclick="home()">Back to Products</button>
                 </div>
 
-                <div class="detail-contact-options">
-                    <a href="https://discord.gg/3Ff4rScFZk" target="_blank" class="detail-contact-btn">
+                <div class="detail-links">
+                    <a href="https://discord.gg/3Ff4rScFZk" target="_blank">
                         <img src="discord.png" alt="Discord">
                         <span>Discord</span>
                     </a>
-                    <a href="https://www.instagram.com/official_pasalnp/" target="_blank" class="detail-contact-btn">
+                    <a href="https://www.instagram.com/official_pasalnp/" target="_blank">
                         <img src="insta.png" alt="Instagram">
                         <span>Instagram</span>
                     </a>
@@ -711,49 +331,40 @@
     </div>
 
     <script>
-        function showProductDetail(icon, title, price, description, deliveryInfo) {
-            document.getElementById('homepage').style.display = 'none';
-            document.getElementById('productDetail').classList.add('active');
-            document.getElementById('detailIcon').src = icon;
-            document.getElementById('detailTitle').textContent = title;
-            document.getElementById('detailPrice').textContent = price;
-            document.getElementById('detailDescription').textContent = description;
-            document.getElementById('deliveryInfo').textContent = deliveryInfo;
+        function detail(icon, title, price, desc, delivery) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('details').classList.add('active');
+            document.getElementById('di').src = icon;
+            document.getElementById('dt').textContent = title;
+            document.getElementById('dp').textContent = price;
+            document.getElementById('dd').textContent = desc;
+            document.getElementById('dv').textContent = delivery;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function showHomePage() {
-            document.getElementById('homepage').style.display = 'block';
-            document.getElementById('productDetail').classList.remove('active');
+        function home() {
+            document.getElementById('home').style.display = 'block';
+            document.getElementById('details').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function scrollToProducts() {
-            showHomePage();
-            setTimeout(() => {
-                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+        function scroll(id) {
+            home();
+            setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 100);
         }
 
-        function scrollToContact() {
-            showHomePage();
-            setTimeout(() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+        function showOnline() {
+            document.getElementById('online').style.display = 'block';
+            document.getElementById('store').style.display = 'none';
+            document.querySelectorAll('.toggle button')[1].classList.add('active');
+            document.querySelectorAll('.toggle button')[0].classList.remove('active');
         }
 
-        function showOnlineProducts() {
-            document.getElementById('onlineProducts').style.display = 'block';
-            document.getElementById('storeProducts').style.display = 'none';
-            document.querySelectorAll('.toggle-btn')[1].classList.add('active');
-            document.querySelectorAll('.toggle-btn')[0].classList.remove('active');
-        }
-
-        function showStoreProducts() {
-            document.getElementById('onlineProducts').style.display = 'none';
-            document.getElementById('storeProducts').style.display = 'block';
-            document.querySelectorAll('.toggle-btn')[1].classList.remove('active');
-            document.querySelectorAll('.toggle-btn')[0].classList.add('active');
+        function showStore() {
+            document.getElementById('online').style.display = 'none';
+            document.getElementById('store').style.display = 'block';
+            document.querySelectorAll('.toggle button')[0].classList.add('active');
+            document.querySelectorAll('.toggle button')[1].classList.remove('active');
         }
     </script>
 </body>
