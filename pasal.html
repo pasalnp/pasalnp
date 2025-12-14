@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PASAL - sasto n</title>
+    <title>PASAL - sasto saman</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -151,6 +151,44 @@
             color: #1a1a1a;
             margin-bottom: 3rem;
             font-weight: 800;
+        }
+
+        .product-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .toggle-btn {
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 2px solid #667eea;
+            background: transparent;
+            color: #667eea;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .product-section {
+            animation: fadeInSection 0.5s ease;
+        }
+
+        @keyframes fadeInSection {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .product-category {
@@ -418,6 +456,8 @@
             .detail-title { font-size: 2rem; }
             .action-buttons { flex-direction: column; }
             .buy-button, .back-button { width: 100%; }
+            .product-toggle { flex-direction: column; }
+            .toggle-btn { width: 100%; }
         }
     </style>
 </head>
@@ -448,81 +488,174 @@
             <section class="products" id="products">
                 <h2>Our Products</h2>
                 
-                <div class="product-category">
-                    <h3 class="category-title">🎮 Roblox</h3>
-                    <div class="features">
-                        <div class="feature-card" onclick='showProductDetail("robux.png", "100 Robux", "RS 120", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase")'>
-                            <img src="robux.png" alt="Robux" class="feature-icon">
-                            <h3>100 Robux</h3>
-                            <p class="price">RS 120</p>
+                <div class="product-toggle">
+                    <button class="toggle-btn" onclick="showStoreProducts()">Store</button>
+                    <button class="toggle-btn active" onclick="showOnlineProducts()">Online</button>
+                </div>
+
+                <div id="onlineProducts" class="product-section">
+                    <div class="product-category">
+                        <h3 class="category-title">🎮 Roblox</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("robux.png", "100 Robux", "RS 120", "Robux will be delivered through gamepass method. Simply provide your Roblox username and gamepass details, and we will process your order.", "Delivery within 24 hours of purchase")'>
+                                <img src="robux.png" alt="Robux" class="feature-icon">
+                                <h3>100 Robux</h3>
+                                <p class="price">RS 120</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("robux.png", "500 Robux", "RS 600", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
+                                <img src="robux.png" alt="Robux" class="feature-icon">
+                                <h3>500 Robux</h3>
+                                <p class="price">RS 600</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("robux.png", "1000 Robux", "RS 1200", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
+                                <img src="robux.png" alt="Robux" class="feature-icon">
+                                <h3>1000 Robux</h3>
+                                <p class="price">RS 1200</p>
+                            </div>
                         </div>
-                        <div class="feature-card" onclick='showProductDetail("robux.png", "500 Robux", "RS 600", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
-                            <img src="robux.png" alt="Robux" class="feature-icon">
-                            <h3>500 Robux</h3>
-                            <p class="price">RS 600</p>
+                    </div>
+
+                    <div class="product-category">
+                        <h3 class="category-title">⚔️ Mobile Legends</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("diamond.png", "55 Diamonds", "RS 150", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID.", "Delivery within 1-6 hours")'>
+                                <img src="diamond.png" alt="Diamond" class="feature-icon">
+                                <h3>55 Diamonds</h3>
+                                <p class="price">RS 150</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("diamond.png", "172 Diamonds", "RS 400", "Diamonds will be added directly to your account.", "Delivery within 1-6 hours")'>
+                                <img src="diamond.png" alt="Diamond" class="feature-icon">
+                                <h3>172 Diamonds</h3>
+                                <p class="price">RS 400</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("diamond.png", "Weekly Diamond Pass", "RS 250", "Weekly Pass provides daily diamond rewards for 7 days.", "Activated within 1-6 hours")'>
+                                <img src="diamond.png" alt="Diamond" class="feature-icon">
+                                <h3>Weekly Pass</h3>
+                                <p class="price">RS 250</p>
+                            </div>
                         </div>
-                        <div class="feature-card" onclick='showProductDetail("robux.png", "1000 Robux", "RS 1200", "Robux will be delivered through gamepass method.", "Delivery within 24 hours")'>
-                            <img src="robux.png" alt="Robux" class="feature-icon">
-                            <h3>1000 Robux</h3>
-                            <p class="price">RS 1200</p>
+                    </div>
+
+                    <div class="product-category">
+                        <h3 class="category-title">📱 App Subscriptions</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("Netflix.png", "Netflix Subscription", "RS 450", "Get 1 month Netflix subscription.", "Details within 24 hours")'>
+                                <img src="Netflix.png" alt="Netflix" class="feature-icon">
+                                <h3>Netflix</h3>
+                                <p class="price">RS 450</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("spotify.png", "Spotify Premium", "RS 250", "Get 1 month Spotify Premium.", "Details within 24 hours")'>
+                                <img src="spotify.png" alt="Spotify" class="feature-icon">
+                                <h3>Spotify</h3>
+                                <p class="price">RS 250</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("yt.png", "YouTube Premium", "RS 200", "Get 1 month YouTube Premium.", "Details within 24 hours")'>
+                                <img src="yt.png" alt="YouTube" class="feature-icon">
+                                <h3>YouTube Premium</h3>
+                                <p class="price">RS 200</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-category">
+                        <h3 class="category-title">🎮 Steam</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("steam.png", "$1.21 Steam Gift Card", "RS 250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
+                                <img src="steam.png" alt="Steam" class="feature-icon">
+                                <h3>$1.21 Gift Card</h3>
+                                <p class="price">RS 250</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("steam.png", "$7.2 Steam Gift Card", "RS 1250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
+                                <img src="steam.png" alt="Steam" class="feature-icon">
+                                <h3>$7.2 Gift Card</h3>
+                                <p class="price">RS 1250</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-category">
-                    <h3 class="category-title">⚔️ Mobile Legends</h3>
-                    <div class="features">
-                        <div class="feature-card" onclick='showProductDetail("diamond.png", "55 Diamonds", "RS 150", "Diamonds will be added directly to your Mobile Legends account. Provide your User ID and Server ID.", "Delivery within 1-6 hours")'>
-                            <img src="diamond.png" alt="Diamond" class="feature-icon">
-                            <h3>55 Diamonds</h3>
-                            <p class="price">RS 150</p>
-                        </div>
-                        <div class="feature-card" onclick='showProductDetail("diamond.png", "172 Diamonds", "RS 400", "Diamonds will be added directly to your account.", "Delivery within 1-6 hours")'>
-                            <img src="diamond.png" alt="Diamond" class="feature-icon">
-                            <h3>172 Diamonds</h3>
-                            <p class="price">RS 400</p>
-                        </div>
-                        <div class="feature-card" onclick='showProductDetail("diamond.png", "Weekly Diamond Pass", "RS 250", "Weekly Pass provides daily diamond rewards for 7 days.", "Activated within 1-6 hours")'>
-                            <img src="diamond.png" alt="Diamond" class="feature-icon">
-                            <h3>Weekly Pass</h3>
-                            <p class="price">RS 250</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-category">
-                    <h3 class="category-title">📱 App Subscriptions</h3>
-                    <div class="features">
-                        <div class="feature-card" onclick='showProductDetail("Netflix.png", "Netflix Subscription", "RS 450", "Get 1 month Netflix subscription.", "Details within 24 hours")'>
-                            <img src="Netflix.png" alt="Netflix" class="feature-icon">
-                            <h3>Netflix</h3>
-                            <p class="price">RS 450</p>
-                        </div>
-                        <div class="feature-card" onclick='showProductDetail("spotify.png", "Spotify Premium", "RS 250", "Get 1 month Spotify Premium.", "Details within 24 hours")'>
-                            <img src="spotify.png" alt="Spotify" class="feature-icon">
-                            <h3>Spotify</h3>
-                            <p class="price">RS 250</p>
-                        </div>
-                        <div class="feature-card" onclick='showProductDetail("yt.png", "YouTube Premium", "RS 200", "Get 1 month YouTube Premium.", "Details within 24 hours")'>
-                            <img src="yt.png" alt="YouTube" class="feature-icon">
-                            <h3>YouTube Premium</h3>
-                            <p class="price">RS 200</p>
+                <div id="storeProducts" class="product-section" style="display: none;">
+                    <div class="product-category">
+                        <h3 class="category-title">👕 Clothes</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Shirt", "T-Shirt", "RS 500", "High-quality cotton t-shirts in various colors and sizes.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Shirt" alt="T-Shirt" class="feature-icon">
+                                <h3>T-Shirt</h3>
+                                <p class="price">RS 500</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Jeans", "Jeans", "RS 1500", "Comfortable denim jeans for everyday wear.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Jeans" alt="Jeans" class="feature-icon">
+                                <h3>Jeans</h3>
+                                <p class="price">RS 1500</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Jacket", "Jacket", "RS 2500", "Stylish jackets for all seasons.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Jacket" alt="Jacket" class="feature-icon">
+                                <h3>Jacket</h3>
+                                <p class="price">RS 2500</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="product-category">
-                    <h3 class="category-title">🎮 Steam</h3>
-                    <div class="features">
-                        <div class="feature-card" onclick='showProductDetail("steam.png", "$1.21 Steam Gift Card", "RS 250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
-                            <img src="steam.png" alt="Steam" class="feature-icon">
-                            <h3>$1.21 Gift Card</h3>
-                            <p class="price">RS 250</p>
+                    <div class="product-category">
+                        <h3 class="category-title">🎨 Decoration</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Frame", "Photo Frame", "RS 300", "Beautiful frames to display your memories.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Frame" alt="Frame" class="feature-icon">
+                                <h3>Photo Frame</h3>
+                                <p class="price">RS 300</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Lamp", "Desk Lamp", "RS 800", "Modern desk lamps for your workspace.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Lamp" alt="Lamp" class="feature-icon">
+                                <h3>Desk Lamp</h3>
+                                <p class="price">RS 800</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Vase", "Decorative Vase", "RS 600", "Elegant vases for your home decor.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Vase" alt="Vase" class="feature-icon">
+                                <h3>Decorative Vase</h3>
+                                <p class="price">RS 600</p>
+                            </div>
                         </div>
-                        <div class="feature-card" onclick='showProductDetail("steam.png", "$7.2 Steam Gift Card", "RS 1250", "Digital Steam Gift Card code.", "Code within 24 hours")'>
-                            <img src="steam.png" alt="Steam" class="feature-icon">
-                            <h3>$7.2 Gift Card</h3>
-                            <p class="price">RS 1250</p>
+                    </div>
+
+                    <div class="product-category">
+                        <h3 class="category-title">⌚ Watches</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Watch", "Smart Watch", "RS 3500", "Feature-rich smartwatch with fitness tracking.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Watch" alt="Smart Watch" class="feature-icon">
+                                <h3>Smart Watch</h3>
+                                <p class="price">RS 3500</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Watch", "Analog Watch", "RS 2000", "Classic analog watches with elegant design.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Watch" alt="Analog Watch" class="feature-icon">
+                                <h3>Analog Watch</h3>
+                                <p class="price">RS 2000</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Watch", "Sports Watch", "RS 1800", "Durable sports watches for active lifestyle.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Watch" alt="Sports Watch" class="feature-icon">
+                                <h3>Sports Watch</h3>
+                                <p class="price">RS 1800</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-category">
+                        <h3 class="category-title">🧸 Toys</h3>
+                        <div class="features">
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Teddy", "Teddy Bear", "RS 700", "Soft and cuddly teddy bears for kids.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Teddy" alt="Teddy" class="feature-icon">
+                                <h3>Teddy Bear</h3>
+                                <p class="price">RS 700</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/764ba2/ffffff?text=Puzzle", "Puzzle Set", "RS 500", "Educational puzzle sets for all ages.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/764ba2/ffffff?text=Puzzle" alt="Puzzle" class="feature-icon">
+                                <h3>Puzzle Set</h3>
+                                <p class="price">RS 500</p>
+                            </div>
+                            <div class="feature-card" onclick='showProductDetail("https://via.placeholder.com/80/667eea/ffffff?text=Car", "Remote Control Car", "RS 1200", "Fun remote control cars for kids.", "Available in store")'>
+                                <img src="https://via.placeholder.com/80/667eea/ffffff?text=Car" alt="RC Car" class="feature-icon">
+                                <h3>RC Car</h3>
+                                <p class="price">RS 1200</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -607,6 +740,20 @@
             setTimeout(() => {
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }, 100);
+        }
+
+        function showOnlineProducts() {
+            document.getElementById('onlineProducts').style.display = 'block';
+            document.getElementById('storeProducts').style.display = 'none';
+            document.querySelectorAll('.toggle-btn')[1].classList.add('active');
+            document.querySelectorAll('.toggle-btn')[0].classList.remove('active');
+        }
+
+        function showStoreProducts() {
+            document.getElementById('onlineProducts').style.display = 'none';
+            document.getElementById('storeProducts').style.display = 'block';
+            document.querySelectorAll('.toggle-btn')[1].classList.remove('active');
+            document.querySelectorAll('.toggle-btn')[0].classList.add('active');
         }
     </script>
 </body>
