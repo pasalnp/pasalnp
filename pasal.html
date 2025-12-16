@@ -122,7 +122,7 @@
             transform: scale(1.05);
         }
         
-        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav ul { display: flex; list-style: none; gap: 2rem; align-items: center; }
         nav a { 
             color: #4b5563; 
             text-decoration: none; 
@@ -503,6 +503,223 @@
             width: 24px; 
             height: 24px;
         }
+
+        /* Auth Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .modal-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-family: Inter, sans-serif;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+        
+        .error {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .error.active {
+            display: block;
+        }
+        
+        .success {
+            color: #10b981;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .success.active {
+            display: block;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .modal-actions button {
+            flex: 1;
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 14px 36px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .switch-auth {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .switch-auth a {
+            color: #f97316;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .switch-auth a:hover {
+            text-decoration: underline;
+        }
+        
+        .user-menu {
+            position: relative;
+        }
+        
+        .user-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4b5563;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+        
+        .user-button:hover {
+            color: #f97316;
+        }
+        
+        .user-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            display: none;
+            z-index: 100;
+        }
+        
+        .dropdown.active {
+            display: block;
+        }
+        
+        .dropdown a, .dropdown button {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.95rem;
+            font-family: Inter, sans-serif;
+            transition: all 0.2s;
+        }
+        
+        .dropdown a:hover, .dropdown button:hover {
+            background: #f9fafb;
+            color: #f97316;
+        }
+        
+        .dropdown button {
+            border-top: 1px solid #e5e7eb;
+        }
         
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
@@ -534,6 +751,7 @@
                     <li><a href="#" onclick="home()">Home</a></li>
                     <li><a href="#products" onclick="scroll('products')">Products</a></li>
                     <li><a href="#contact" onclick="scroll('contact')">Contact</a></li>
+                    <li id="authLink"><a href="#" onclick="showLogin()">Login</a></li>
                 </ul>
             </nav>
         </header>
@@ -769,9 +987,269 @@
                 </div>
             </div>
         </div>
+
+        <!-- Auth Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <div class="modal-header">
+                        <h2>Welcome Back</h2>
+                        <p>Login to access your account</p>
+                    </div>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required placeholder="Enter your password">
+                        </div>
+                        <div id="loginError" class="error"></div>
+                        <div class="modal-actions">
+                            <button type="button" class="btn-secondary" onclick="closeAuthModal()">Cancel</button>
+                            <button type="submit" class="btn">Login</button>
+                        </div>
+                    </form>
+                    <div class="switch-auth">
+                        Don't have an account? <a onclick="switchToRegister()">Register</a>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" style="display: none;">
+                    <div class="modal-header">
+                        <h2>Create Account</h2>
+                        <p>Join PASAL today</p>
+                    </div>
+                    <form onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label for="registerName">Full Name</label>
+                            <input type="text" id="registerName" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" required placeholder="Create a password" minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerConfirm">Confirm Password</label>
+                            <input type="password" id="registerConfirm" required placeholder="Confirm your password">
+                        </div>
+                        <div id="registerError" class="error"></div>
+                        <div id="registerSuccess" class="success"></div>
+                        <div class="modal-actions">
+                            <button type="button" class="btn-secondary" onclick="closeAuthModal()">Cancel</button>
+                            <button type="submit" class="btn">Register</button>
+                        </div>
+                    </form>
+                    <div class="switch-auth">
+                        Already have an account? <a onclick="switchToLogin()">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        // Auth State Management
+        let currentUser = null;
+
+        // Initialize auth state on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkAuthState();
+        });
+
+        function checkAuthState() {
+            const stored = localStorage.getItem('currentUser');
+            if (stored) {
+                try {
+                    currentUser = JSON.parse(stored);
+                    updateAuthUI(true);
+                } catch (e) {
+                    localStorage.removeItem('currentUser');
+                }
+            }
+        }
+
+        function updateAuthUI(isLoggedIn) {
+            const authLink = document.getElementById('authLink');
+            if (isLoggedIn && currentUser) {
+                authLink.innerHTML = `
+                    <div class="user-menu">
+                        <div class="user-button" onclick="toggleUserMenu(event)">
+                            <div class="user-icon">${currentUser.name.charAt(0).toUpperCase()}</div>
+                            <span>${currentUser.name}</span>
+                        </div>
+                        <div id="userDropdown" class="dropdown">
+                            <a href="#" onclick="viewProfile(); return false;">Profile</a>
+                            <a href="#" onclick="viewOrders(); return false;">My Orders</a>
+                            <button onclick="handleLogout()">Logout</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                authLink.innerHTML = '<a href="#" onclick="showLogin(); return false;">Login</a>';
+            }
+        }
+
+        function toggleUserMenu(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown && !e.target.closest('.user-menu')) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        function showLogin() {
+            document.getElementById('authModal').classList.add('active');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            clearForms();
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+            clearForms();
+        }
+
+        function switchToRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            clearForms();
+        }
+
+        function switchToLogin() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            clearForms();
+        }
+
+        function clearForms() {
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.success').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('input').forEach(input => {
+                if (input.type !== 'submit' && input.type !== 'button') {
+                    input.value = '';
+                }
+            });
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirm').value;
+            
+            const errorEl = document.getElementById('registerError');
+            const successEl = document.getElementById('registerSuccess');
+            
+            errorEl.classList.remove('active');
+            successEl.classList.remove('active');
+
+            if (password.length < 6) {
+                errorEl.textContent = 'Password must be at least 6 characters';
+                errorEl.classList.add('active');
+                return;
+            }
+
+            if (password !== confirm) {
+                errorEl.textContent = 'Passwords do not match';
+                errorEl.classList.add('active');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('pasalUsers') || '[]');
+            if (users.some(u => u.email === email)) {
+                errorEl.textContent = 'Email already registered';
+                errorEl.classList.add('active');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                password,
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            localStorage.setItem('pasalUsers', JSON.stringify(users));
+
+            successEl.textContent = 'Account created successfully! Please login.';
+            successEl.classList.add('active');
+
+            setTimeout(() => {
+                switchToLogin();
+            }, 2000);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            const errorEl = document.getElementById('loginError');
+            errorEl.classList.remove('active');
+
+            const users = JSON.parse(localStorage.getItem('pasalUsers') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                errorEl.textContent = 'Invalid email or password';
+                errorEl.classList.add('active');
+                return;
+            }
+
+            currentUser = { id: user.id, name: user.name, email: user.email };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            updateAuthUI(true);
+            closeAuthModal();
+            
+            setTimeout(() => {
+                alert(`Welcome back, ${currentUser.name}! 🎉`);
+            }, 300);
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                localStorage.removeItem('currentUser');
+                updateAuthUI(false);
+                home();
+            }
+        }
+
+        function viewProfile() {
+            alert(`Profile: ${currentUser.name}\nEmail: ${currentUser.email}\n\nFull profile page coming soon!`);
+        }
+
+        function viewOrders() {
+            alert('Your orders page is coming soon! You will be able to track all your purchases here.');
+        }
+
+        document.getElementById('authModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'authModal') {
+                closeAuthModal();
+            }
+        });
+
+        // Original functions
         function detail(icon, title, price, desc, delivery) {
             document.getElementById('home').style.display = 'none';
             document.getElementById('details').classList.add('active');
