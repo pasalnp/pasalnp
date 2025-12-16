@@ -720,6 +720,168 @@
         .dropdown button {
             border-top: 1px solid #e5e7eb;
         }
+
+        /* Admin Styles */
+        .admin-panel {
+            display: none;
+            max-width: 1400px;
+            margin: 120px auto 60px;
+            padding: 0 2rem;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            padding: 2rem;
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #f97316;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: #6b7280;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .admin-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 2rem;
+        }
+
+        .admin-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f97316;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .user-table thead {
+            background: #f9fafb;
+        }
+
+        .user-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .user-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #4b5563;
+        }
+
+        .user-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .activity-item {
+            padding: 1rem;
+            border-left: 3px solid #f97316;
+            background: #f9fafb;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .activity-item .time {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-item .action {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .activity-item .details {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-top: 0.25rem;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 14px 36px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .no-data {
+            text-align: center;
+            color: #6b7280;
+            padding: 2rem;
+            font-style: italic;
+        }
         
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
@@ -751,6 +913,7 @@
                     <li><a href="#" onclick="home()">Home</a></li>
                     <li><a href="#products" onclick="scroll('products')">Products</a></li>
                     <li><a href="#contact" onclick="scroll('contact')">Contact</a></li>
+                    <li><a href="#" onclick="showAdminLogin()">Admin</a></li>
                     <li id="authLink"><a href="#" onclick="showLogin()">Login</a></li>
                 </ul>
             </nav>
@@ -1053,11 +1216,119 @@
                 </div>
             </div>
         </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="admin-panel">
+            <div class="admin-header">
+                <h1>🔐 Admin Dashboard</h1>
+                <p>Monitor user activity and manage your PASAL store</p>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3 id="totalUsers">0</h3>
+                    <p>Total Registered Users</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="activeUsers">0</h3>
+                    <p>Active Sessions</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalViews">0</h3>
+                    <p>Total Product Views</p>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h2>👥 Registered Users</h2>
+                <div style="overflow-x: auto;">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Registered On</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr><td colspan="5" class="no-data">No users registered yet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h2>📊 User Activity Log</h2>
+                <div id="activityLog">
+                    <p class="no-data">No activity recorded yet</p>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h2>🔥 Most Viewed Products</h2>
+                <div id="popularProducts">
+                    <p class="no-data">No product views yet</p>
+                </div>
+            </div>
+
+            <div class="admin-actions">
+                <button class="btn" onclick="refreshAdminData()">🔄 Refresh Data</button>
+                <button class="btn-outline" onclick="exitAdmin()">← Back to Home</button>
+                <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
+            </div>
+        </div>
+
+        <!-- Admin Login Modal -->
+        <div id="adminLoginModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🔐 Admin Login</h2>
+                    <p>Enter admin password to continue</p>
+                </div>
+                <form onsubmit="handleAdminLogin(event)">
+                    <div class="form-group">
+                        <label for="adminPassword">Admin Password</label>
+                        <input type="password" id="adminPassword" required placeholder="Enter admin password">
+                    </div>
+                    <div id="adminLoginError" class="error"></div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="closeAdminLogin()">Cancel</button>
+                        <button type="submit" class="btn">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script>
         // Auth State Management
         let currentUser = null;
+        const ADMIN_PASSWORD = 'brendon@123';
+
+        // Activity tracking
+        function logActivity(action, details) {
+            const activities = JSON.parse(localStorage.getItem('pasalActivities') || '[]');
+            activities.unshift({
+                timestamp: new Date().toISOString(),
+                user: currentUser ? currentUser.email : 'Guest',
+                userName: currentUser ? currentUser.name : 'Guest',
+                action: action,
+                details: details
+            });
+            // Keep only last 100 activities
+            if (activities.length > 100) activities.pop();
+            localStorage.setItem('pasalActivities', JSON.stringify(activities));
+        }
+
+        // Track product views
+        function trackProductView(productName) {
+            const views = JSON.parse(localStorage.getItem('pasalProductViews') || '{}');
+            views[productName] = (views[productName] || 0) + 1;
+            localStorage.setItem('pasalProductViews', JSON.stringify(views));
+            logActivity('Product View', `Viewed: ${productName}`);
+        }
 
         // Initialize auth state on page load
         window.addEventListener('DOMContentLoaded', () => {
@@ -1218,6 +1489,9 @@
             currentUser = { id: user.id, name: user.name, email: user.email };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             
+            // Log login activity
+            logActivity('User Login', `${user.name} logged in`);
+            
             updateAuthUI(true);
             closeAuthModal();
             
@@ -1228,6 +1502,7 @@
 
         function handleLogout() {
             if (confirm('Are you sure you want to logout?')) {
+                logActivity('User Logout', `${currentUser.name} logged out`);
                 currentUser = null;
                 localStorage.removeItem('currentUser');
                 updateAuthUI(false);
@@ -1258,12 +1533,17 @@
             document.getElementById('dp').textContent = price;
             document.getElementById('dd').textContent = desc;
             document.getElementById('dv').textContent = delivery;
+            
+            // Track product view
+            trackProductView(title);
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function home() {
             document.getElementById('home').style.display = 'block';
             document.getElementById('details').classList.remove('active');
+            document.getElementById('adminPanel').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
